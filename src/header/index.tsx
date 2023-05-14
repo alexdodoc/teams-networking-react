@@ -1,5 +1,6 @@
 import { MainMenu } from "../menu/MainMenu";
 import logo from "./poza.jpg";
+import "./style.css";
 
 export default function AppHeader() {
   return (

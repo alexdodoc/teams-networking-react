@@ -1,0 +1,13 @@
+#header-wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: #87ceeb;
+}
+#my-picture img {
+  border: 4px solid #ecebeb;
+  border-radius: 50%;
+}
+
+#info-details {
+  padding: 0 15px;
+}

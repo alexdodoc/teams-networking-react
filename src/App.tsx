@@ -9,6 +9,7 @@ function App() {
     <React.Fragment>
       <Header />
       <ContentWrapper />
+      {/* <footer>...ceva text</footer> */}
       <AppFooter />
     </React.Fragment>
   );

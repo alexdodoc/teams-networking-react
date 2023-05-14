@@ -1,0 +1,21 @@
+footer {
+  background-color: #58a9c9;
+  padding: 10px 10px 8px 10px;
+  text-align: center;
+  min-height: 20px;
+}
+
+footer a {
+  color: black;
+  vertical-align: top;
+  line-height: 20px;
+  display: inline-block;
+  padding: 2px 5px;
+  text-decoration: none;
+}
+
+footer a:hover {
+  background-color: #4499bb;
+  border-radius: 5px;
+  color: white;
+}
