@@ -1,6 +1,29 @@
 import "./style.css";
 
 export function TeamsTable() {
+  const teams = [
+    {
+      id: "toze8j1610313009673",
+      promotion: "html",
+      members: "Nicolae Matei, HTML",
+      name: "Web Presentation",
+      url: "https://github.com/nmatei/web-intro-presentation"
+    },
+    {
+      id: "ezabnf1630345987541",
+      promotion: "css",
+      members: "Nicolae",
+      name: "Names",
+      url: "https://github.com/nmatei/nmatei.github.io"
+    },
+    {
+      id: "86mq81630347385708",
+      promotion: "js",
+      members: "Matei, Andrei",
+      name: "JS/HTML/CSS Quiz",
+      url: "https://github.com/nmatei/simple-quiz-app"
+    }
+  ];
   return (
     <form id="editForm" action="" method="post">
       <table>
@@ -24,7 +47,38 @@ export function TeamsTable() {
             <th></th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {teams.map(({ id, url, promotion, members, name }) => {
+            let displayURL = url;
+            if (url.startsWith("https://")) {
+              displayURL = url.substring(8);
+            }
+            return (
+              <tr key={id}>
+                <td>
+                  <input type="checkbox" name="selected" value={id} />
+                </td>
+                <td>{promotion}</td>
+                <td>{members}</td>
+                <td>{name}</td>
+                <td>
+                  <a href={url} target="_blank">
+                    {displayURL}
+                    {url}
+                  </a>
+                </td>
+                <td>
+                  <a data-id={id} className="link-btn remove-btn">
+                    ✖
+                  </a>
+                  <a data-id={id} className="link-btn edit-btn">
+                    &#9998;
+                  </a>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
         <tfoot>
           <tr>
             <td></td>
