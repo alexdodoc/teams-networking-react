@@ -1,3 +1,4 @@
+import React from "react";
 import "./style.css";
 type Team = {
   id: string;
@@ -11,6 +12,7 @@ type Props = {
   teams: Team[];
 };
 export function TeamsTable(props: Props) {
+  console.warn("props");
   return (
     <form id="editForm" action="" method="post" className={props.loading ? "loading-mask" : ""}>
       <table>
@@ -92,37 +94,51 @@ export function TeamsTable(props: Props) {
   );
 }
 
-export function TeamsTableWrapper() {
-  const teams = [
-    {
-      id: "toze8j1610313009673",
-      promotion: "html",
-      members: "Nicolae Matei, HTML",
-      name: "Web Presentation",
-      url: "https://github.com/nmatei/web-intro-presentation"
-    },
-    {
-      id: "ezabnf1630345987541",
-      promotion: "css",
-      members: "Nicolae",
-      name: "Names",
-      url: "https://github.com/nmatei/nmatei.github.io"
-    },
-    {
-      id: "86mq81630347385708",
-      promotion: "js",
-      members: "Matei, Andrei",
-      name: "JS/HTML/CSS Quiz",
-      url: "https://github.com/nmatei/simple-quiz-app"
-    }
-  ];
-  // return TeamsTable({
-  //   teams: teams
-  // });
-  return (
-    <>
-      <TeamsTable teams={[]} loading={true} />
-      <TeamsTable teams={teams} loading={false} />
-    </>
-  );
+type WrapperProps = {};
+type State = {
+  loading: boolean;
+  teams: Team[];
+};
+
+export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
+  constructor(props: WrapperProps) {
+    super(props);
+    console.warn("constructor props", props);
+    this.state = {
+      loading: true,
+      teams: []
+    };
+  }
+
+  componentDidMount(): void {
+    console.info("mount");
+    setTimeout(() => {
+      console.info("change loading");
+      // this.state.loading = false; // not working as is readonly
+      this.setState({
+        loading: false,
+        teams: [
+          {
+            id: "toze8j1610313009673",
+            promotion: "html",
+            members: "Nicolae Matei, HTML",
+            name: "Web Presentation",
+            url: "https://github.com/nmatei/web-intro-presentation"
+          },
+          {
+            id: "ezabnf1630345987541",
+            promotion: "css",
+            members: "Nicolae",
+            name: "Names",
+            url: "https://github.com/nmatei/nmatei.github.io"
+          }
+        ]
+      });
+    }, 5000);
+  }
+
+  render() {
+    console.warn("render");
+    return <TeamsTable teams={this.state.teams} loading={this.state.loading} />;
+  }
 }
