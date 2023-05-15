@@ -1,31 +1,8 @@
 import "./style.css";
 
-export function TeamsTable() {
-  const teams = [
-    {
-      id: "toze8j1610313009673",
-      promotion: "html",
-      members: "Nicolae Matei, HTML",
-      name: "Web Presentation",
-      url: "https://github.com/nmatei/web-intro-presentation"
-    },
-    {
-      id: "ezabnf1630345987541",
-      promotion: "css",
-      members: "Nicolae",
-      name: "Names",
-      url: "https://github.com/nmatei/nmatei.github.io"
-    },
-    {
-      id: "86mq81630347385708",
-      promotion: "js",
-      members: "Matei, Andrei",
-      name: "JS/HTML/CSS Quiz",
-      url: "https://github.com/nmatei/simple-quiz-app"
-    }
-  ];
+export function TeamsTable(props) {
   return (
-    <form id="editForm" action="" method="post">
+    <form id="editForm" action="" method="post" className={props.loading ? "loading-mask" : ""}>
       <table>
         <colgroup>
           <col span={1} style={{ width: "40px" }} />
@@ -48,7 +25,7 @@ export function TeamsTable() {
           </tr>
         </thead>
         <tbody>
-          {teams.map(({ id, url, promotion, members, name }) => {
+          {props.teams.map(({ id, url, promotion, members, name }) => {
             let displayURL = url;
             if (url.startsWith("https://")) {
               displayURL = url.substring(8);
@@ -102,5 +79,40 @@ export function TeamsTable() {
         </tfoot>
       </table>
     </form>
+  );
+}
+
+export function TeamsTableWrapper() {
+  const teams = [
+    {
+      id: "toze8j1610313009673",
+      promotion: "html",
+      members: "Nicolae Matei, HTML",
+      name: "Web Presentation",
+      url: "https://github.com/nmatei/web-intro-presentation"
+    },
+    {
+      id: "ezabnf1630345987541",
+      promotion: "css",
+      members: "Nicolae",
+      name: "Names",
+      url: "https://github.com/nmatei/nmatei.github.io"
+    },
+    {
+      id: "86mq81630347385708",
+      promotion: "js",
+      members: "Matei, Andrei",
+      name: "JS/HTML/CSS Quiz",
+      url: "https://github.com/nmatei/simple-quiz-app"
+    }
+  ];
+  // return TeamsTable({
+  //   teams: teams
+  // });
+  return (
+    <>
+      <TeamsTable teams={[]} loading={true} />
+      <TeamsTable teams={teams} loading={false} />
+    </>
   );
 }
