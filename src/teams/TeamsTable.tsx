@@ -1,6 +1,16 @@
 import "./style.css";
-
-export function TeamsTable(props) {
+type Team = {
+  id: string;
+  name: string;
+  promotion: string;
+  members: string;
+  url: string;
+};
+type Props = {
+  loading: boolean;
+  teams: Team[];
+};
+export function TeamsTable(props: Props) {
   return (
     <form id="editForm" action="" method="post" className={props.loading ? "loading-mask" : ""}>
       <table>
