@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import { getTeamsRequest } from "./middleware";
 type Team = {
   id: string;
   name: string;
@@ -110,31 +111,14 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     };
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     console.info("mount");
-    setTimeout(() => {
-      console.info("change loading");
-      // this.state.loading = false; // not working as is readonly
-      this.setState({
-        loading: false,
-        teams: [
-          {
-            id: "toze8j1610313009673",
-            promotion: "html",
-            members: "Nicolae Matei, HTML",
-            name: "Web Presentation",
-            url: "https://github.com/nmatei/web-intro-presentation"
-          },
-          {
-            id: "ezabnf1630345987541",
-            promotion: "css",
-            members: "Nicolae",
-            name: "Names",
-            url: "https://github.com/nmatei/nmatei.github.io"
-          }
-        ]
-      });
-    }, 5000);
+    const teams = await getTeamsRequest();
+    console.info("change loading");
+    this.setState({
+      loading: false,
+      teams: teams
+    });
   }
 
   render() {
