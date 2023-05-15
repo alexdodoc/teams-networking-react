@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { getTeamsRequest } from "./middleware";
+import { deleteTeamRequest, getTeamsRequest } from "./middleware";
 type Team = {
   id: string;
   name: string;
@@ -12,8 +12,12 @@ type Props = {
   loading: boolean;
   teams: Team[];
 };
-export function TeamsTable(props: Props) {
-  console.warn("props");
+type Actions = {
+  //deleteTeam: (id:string)=>void
+  deleteTeam(id: string): void;
+};
+
+export function TeamsTable(props: Props & Actions) {
   return (
     <form id="editForm" action="" method="post" className={props.loading ? "loading-mask" : ""}>
       <table>
@@ -58,12 +62,15 @@ export function TeamsTable(props: Props) {
                   </a>
                 </td>
                 <td>
-                  <a data-id={id} className="link-btn remove-btn">
+                  <a
+                    className="link-btn"
+                    onClick={() => {
+                      props.deleteTeam(id);
+                    }}
+                  >
                     ✖
                   </a>
-                  <a data-id={id} className="link-btn edit-btn">
-                    &#9998;
-                  </a>
+                  <a className="link-btn">&#9998;</a>
                 </td>
               </tr>
             );
@@ -104,17 +111,18 @@ type State = {
 export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   constructor(props: WrapperProps) {
     super(props);
-    console.warn("constructor props", props);
     this.state = {
       loading: true,
       teams: []
     };
   }
 
-  async componentDidMount(): Promise<void> {
-    console.info("mount");
+  componentDidMount(): void {
+    this.loadTeams();
+  }
+
+  async loadTeams() {
     const teams = await getTeamsRequest();
-    console.info("change loading");
     this.setState({
       loading: false,
       teams: teams
@@ -122,7 +130,17 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   }
 
   render() {
-    console.warn("render");
-    return <TeamsTable teams={this.state.teams} loading={this.state.loading} />;
+    return (
+      <TeamsTable
+        teams={this.state.teams}
+        loading={this.state.loading}
+        deleteTeam={async (teamId) => {
+          console.warn("TODO pls remove this team", teamId);
+          const status = await deleteTeamRequest(teamId);
+          console.warn("status", status);
+          this.loadTeams();
+        }}
+      />
+    );
   }
 }
