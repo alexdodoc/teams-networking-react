@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { deleteTeamRequest, getTeamsRequest } from "./middleware";
+import { deleteTeamRequest, getTeamsRequest, createTeamRequest } from "./middleware";
 type Team = {
   id: string;
   name: string;
@@ -99,7 +99,7 @@ export function TeamsTable(props: Props & Actions) {
                 required
                 value={props.team.promotion}
                 onChange={(e) => {
-                  props.inputChange(e.target.name, e.target.value);
+                  props.inputChange("promotion", e.target.value);
                 }}
               />
             </td>
@@ -111,7 +111,7 @@ export function TeamsTable(props: Props & Actions) {
                 required
                 value={props.team.members}
                 onChange={(e) => {
-                  props.inputChange(e.target.name, e.target.value);
+                  props.inputChange("members", e.target.value);
                 }}
               />
             </td>
@@ -123,7 +123,7 @@ export function TeamsTable(props: Props & Actions) {
                 required
                 value={props.team.name}
                 onChange={(e) => {
-                  props.inputChange(e.target.name, e.target.value);
+                  props.inputChange("name", e.target.value);
                 }}
               />
             </td>
@@ -135,7 +135,7 @@ export function TeamsTable(props: Props & Actions) {
                 required
                 value={props.team.url}
                 onChange={(e) => {
-                  props.inputChange(e.target.name, e.target.value);
+                  props.inputChange("url", e.target.value);
                 }}
               />
             </td>
@@ -197,17 +197,20 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
           console.warn("status", status);
           this.loadTeams();
         }}
-        save={() => {
-          const team = {}; // todo
+        save={async () => {
+          const team = this.state.team;
 
-          console.warn("todo pls save...", team);
+          const status = await createTeamRequest(team);
+          console.warn("create", status);
+          this.loadTeams();
         }}
         inputChange={(name: string, value: string) => {
-          console.warn("%o changed to %o", name, value);
           //this.state.team.promotion =value ; //nok
           this.setState((state) => {
+            const team = { ...state.team };
+            team[name] = value;
             return {
-              team: { ...state.team, promotion: value }
+              team
             };
           });
         }}
