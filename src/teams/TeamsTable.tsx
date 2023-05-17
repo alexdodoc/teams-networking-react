@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { deleteTeamRequest, getTeamsRequest, createTeamRequest } from "./middleware";
+import { deleteTeamRequest, getTeamsRequest, createTeamRequest, updateTeamRequest } from "./middleware";
 type Team = {
   id: string;
   name: string;
@@ -226,8 +226,13 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         }}
         save={async () => {
           const team = this.state.team;
+          let status;
+          if (team.id) {
+            status = await updateTeamRequest(team);
+          } else {
+            status = await createTeamRequest(team);
+          }
 
-          const status = await createTeamRequest(team);
           console.warn("create", status, team);
           await this.loadTeams();
           this.setState({ team: getEmptyTeam() });
