@@ -70,7 +70,6 @@ export function TeamsTable(props: Props & Actions) {
                 <td>
                   <a href={url} target="_blank">
                     {displayURL}
-                    {url}
                   </a>
                 </td>
                 <td>
@@ -201,18 +200,17 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
           const team = this.state.team;
 
           const status = await createTeamRequest(team);
-          console.warn("create", status);
+          console.warn("create", status, team);
           this.loadTeams();
         }}
         inputChange={(name: string, value: string) => {
           //this.state.team.promotion =value ; //nok
-          this.setState((state) => {
-            const team = { ...state.team };
-            team[name] = value;
-            return {
-              team
-            };
-          });
+          this.setState((state) => ({
+            team: {
+              ...state.team,
+              [name]: value
+            }
+          }));
         }}
       />
     );
