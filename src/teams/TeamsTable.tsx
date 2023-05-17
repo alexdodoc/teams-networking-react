@@ -219,9 +219,8 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
           this.setState({ team: getEmptyTeam() });
         }}
         deleteTeam={async (teamId) => {
-          console.warn("TODO pls remove this team", teamId);
           const status = await deleteTeamRequest(teamId);
-          console.warn("status", status);
+          console.warn("status", status.success);
           this.loadTeams();
         }}
         save={async () => {
