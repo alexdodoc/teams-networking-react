@@ -198,6 +198,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
 
   async loadTeams() {
     const teams = await getTeamsRequest();
+
     this.setState({
       loading: false,
       teams: teams
