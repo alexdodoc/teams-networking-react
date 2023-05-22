@@ -190,6 +190,11 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
       teams: [],
       team: getEmptyTeam()
     };
+
+    const originalSave = this.save;
+    this.save = async () => {
+      originalSave.call(this);
+    };
   }
 
   componentDidMount(): void {
@@ -227,6 +232,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   }
 
   private async save() {
+    console.warn("before save", this);
     this.setState({ loading: true });
     const team = this.state.team;
     let status;
@@ -241,6 +247,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   }
 
   render() {
+    // console.info("render");
     return (
       <TeamsTable
         teams={this.state.teams}
@@ -249,14 +256,9 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         reset={() => {
           this.setState({ team: getEmptyTeam() });
         }}
-        deleteTeam={async (teamId) => {
-          this.deleteTeam(teamId);
-        }}
-        save={async () => {
-          await this.save();
-        }}
+        deleteTeam={this.deleteTeam}
+        save={this.save}
         startEdit={(team) => {
-          console.warn("start edit", team);
           this.setState({ team });
         }}
         inputChange={(name: string, value: string) => {
