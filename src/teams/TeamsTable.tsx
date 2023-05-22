@@ -237,7 +237,6 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
   }
 
   private async save() {
-    console.warn("before save", this);
     this.setState({ loading: true });
     const team = this.state.team;
     let status, id;
@@ -247,7 +246,6 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
       status = await createTeamRequest(team);
       id = status.id;
     }
-    console.warn("save", status, team);
     //   await this.loadTeams();
     this.setState((state) => ({
       loading: false,
