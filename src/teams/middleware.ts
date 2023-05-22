@@ -11,7 +11,7 @@ export function getTeamsRequest(): Promise<Team[]> {
   });
 }
 
-export function createTeamRequest(team: Team) {
+export function createTeamRequest(team: Team): Promise<{ succes: boolean; id: string }> {
   return fetch("http://localhost:3000/teams-json/create", {
     method: "POST",
     headers: {
