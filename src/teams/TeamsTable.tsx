@@ -226,6 +226,20 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     }));
   }
 
+  private async save() {
+    this.setState({ loading: true });
+    const team = this.state.team;
+    let status;
+    if (team.id) {
+      status = await updateTeamRequest(team);
+    } else {
+      status = await createTeamRequest(team);
+    }
+    console.warn("save", status, team);
+    await this.loadTeams();
+    this.setState({ team: getEmptyTeam() });
+  }
+
   render() {
     return (
       <TeamsTable
@@ -239,18 +253,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
           this.deleteTeam(teamId);
         }}
         save={async () => {
-          this.setState({ loading: true });
-          const team = this.state.team;
-          let status;
-          if (team.id) {
-            status = await updateTeamRequest(team);
-          } else {
-            status = await createTeamRequest(team);
-          }
-
-          console.warn("save", status, team);
-          await this.loadTeams();
-          this.setState({ team: getEmptyTeam() });
+          await this.save();
         }}
         startEdit={(team) => {
           console.warn("start edit", team);
