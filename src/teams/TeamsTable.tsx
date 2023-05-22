@@ -240,25 +240,20 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     console.warn("before save", this);
     this.setState({ loading: true });
     const team = this.state.team;
-    let status;
+    let status, id;
     if (team.id) {
       status = await updateTeamRequest(team);
-      this.setState((state) => ({
-        teams: state.teams.map((t) => (t.id === team.id ? { ...team } : t))
-      }));
     } else {
-      const { id } = await createTeamRequest(team);
-
-      this.setState((state) => ({
-        teams: [...state.teams, { ...team, id }]
-      }));
+      status = await createTeamRequest(team);
+      id = status.id;
     }
     console.warn("save", status, team);
     //   await this.loadTeams();
-    this.setState({
+    this.setState((state) => ({
       loading: false,
-      team: getEmptyTeam()
-    });
+      team: getEmptyTeam(),
+      teams: team.id ? state.teams.map((t) => (t.id === team.id ? { ...team } : t)) : [...state.teams, { ...team, id }]
+    }));
   }
 
   private startEdit(team: Team) {
