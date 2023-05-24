@@ -8,6 +8,8 @@ export function ContentWrapper() {
   // setTimeout(() => {
   //   setSearch("react");
   // }, 5000);
+  //console.warn("ContentWrapper.render");
+
   return (
     <section id="content">
       <SideMenu />
@@ -29,7 +31,7 @@ export function ContentWrapper() {
             }}
           />
           <span>🔍</span>
-          <TeamsTableWrapper />
+          <TeamsTableWrapper search={search} />
         </div>
         <div className="page" id="languages">
           Languages ...
