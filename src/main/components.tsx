@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { SideMenu } from "../menu/SideMenu";
 import { TeamsTableWrapper } from "../teams/TeamsTable";
 
 export function ContentWrapper() {
+  //let search = "JS";
+  const [search, setSearch] = useState("JS");
+  // setTimeout(() => {
+  //   setSearch("react");
+  // }, 5000);
   return (
     <section id="content">
       <SideMenu />
@@ -14,6 +20,15 @@ export function ContentWrapper() {
           <ul></ul>
         </div>
         <div className="page" id="teams" style={{ display: "block" }}>
+          <input
+            type="search"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+          <span>🔍</span>
           <TeamsTableWrapper />
         </div>
         <div className="page" id="languages">
