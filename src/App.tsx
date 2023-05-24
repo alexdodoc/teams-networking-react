@@ -6,10 +6,10 @@ import { ContentWrapper } from "./main/components";
 import { Page } from "./main/models";
 
 function App() {
-  let [activePage, setActivePage] = useState<Page>("teams");
+  let [activePage, setActivePage] = useState<Page>("home");
   return (
     <React.Fragment>
-      <Header setActive={setActivePage} />
+      <Header setActive={setActivePage} activePage={activePage} />
       <ContentWrapper activePage={activePage} />
       <AppFooter />
     </React.Fragment>

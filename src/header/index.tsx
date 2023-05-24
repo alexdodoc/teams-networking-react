@@ -3,7 +3,9 @@ import { MainMenu } from "../menu/MainMenu";
 import logo from "./poza.jpg";
 import "./style.css";
 
-type Props = {};
+type Props = {
+  activePage: Page;
+};
 type Actions = {
   setActive(page: Page): void;
 };
@@ -22,7 +24,7 @@ export default function AppHeader(props: Props & Actions) {
           <h2 id="job-title">Programator @ INDUSTRIAL SOFTWARE</h2>
         </div>
       </div>
-      <MainMenu setActive={props.setActive} />
+      <MainMenu setActive={props.setActive} activePage={props.activePage} />
     </header>
   );
 }
