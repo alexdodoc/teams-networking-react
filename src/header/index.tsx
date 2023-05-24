@@ -1,8 +1,16 @@
+import { Page } from "../main/models";
 import { MainMenu } from "../menu/MainMenu";
 import logo from "./poza.jpg";
 import "./style.css";
 
-export default function AppHeader() {
+type Props = {};
+type Actions = {
+  setActive(page: Page): void;
+};
+// interface Props {}
+// interface Actions {}
+
+export default function AppHeader(props: Props & Actions) {
   return (
     <header>
       <div id="header-wrapper">
@@ -14,7 +22,7 @@ export default function AppHeader() {
           <h2 id="job-title">Programator @ INDUSTRIAL SOFTWARE</h2>
         </div>
       </div>
-      <MainMenu />
+      <MainMenu setActive={props.setActive} />
     </header>
   );
 }
